@@ -5,6 +5,36 @@
  *
  * https://www.electronjs.org/docs/latest/tutorial/sandbox
  */
+const { contextBridge, ipcRenderer } = require('electron');
+
+// Liste blanche des canaux autorisés
+const validChannels = ['progressBar']; // Remplacez par vos canaux
+
+contextBridge.exposeInMainWorld('ipc', {
+
+  send: (channel, data) => {
+    if (validChannels.includes(channel)) {
+      ipcRenderer.send(channel, data);
+    } else {
+      console.error(`IPC channel "${channel}" is not allowed`);
+    }
+  },
+
+  on: (channel, callback) => {
+    if (validChannels.includes(channel)) {
+      const newCallback = (event, ...args) => callback(event, ...args);
+      ipcRenderer.on(channel, newCallback);
+
+      // Return a cleanup function to remove the listener
+      return () => {
+        ipcRenderer.removeListener(channel, newCallback);
+      };
+    } else {
+      console.error(`IPC channel "${channel}" is not allowed`);
+    }
+  }
+});
+
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector)

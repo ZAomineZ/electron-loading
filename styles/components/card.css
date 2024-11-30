@@ -1,0 +1,11 @@
+.card {
+    box-sizing: border-box;
+    height: fit-content;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-style: solid;
+    --tw-border-opacity: 1;
+    border-color: rgb(226 232 240 / 1);
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / 1);
+}

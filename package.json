@@ -3,8 +3,18 @@
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
+  "build": {
+    "directories": {
+      "output": "dist/app"
+    },
+    "files": [
+      "dist/source/**/*"
+    ]
+  },
   "scripts": {
-    "start": "electron ."
+    "dev": "electron . --no-sandbox",
+    "build": "vite build",
+    "postinstall": "electron-builder install-app-deps"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -18,5 +28,12 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^26.3.0"
+  },
+  "dependencies": {
+    "electron-builder": "^22.11.7",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "vite": "^2.6.14"
   }
 }
